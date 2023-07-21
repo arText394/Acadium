@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            width: 350px;
+            background-color: lightblue;
+            margin: 10px;
+        }
+        #taskList {
+            float: right;
+            width: 50%;
+        }
+        #taskForm {
+            float: left;
+            width: 50%;
+        }
+        .difficulty, .time {
+            display: inline-block;
+            margin-right: 5px;
+            border: 1px solid black;
+            padding: 5px;
+            cursor: pointer;
+        }
+        .selected {
+            background-color: lightgreen;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        td, th {
+            border: 1px solid black;
+            padding: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="taskForm">
+        <h2>Acadium</h2>
+        <label for="taskName">Task Name:</label><br>
+        <input type="text" id="taskName" name="taskName" placeholder="Task Name"><br><br>
+        <label>Easy - Difficulty Level - Hard</label><br>
+        <span class="difficulty" data-value="1">1</span>
+        <span class="difficulty" data-value="2">2</span>
+        <span class="difficulty" data-value="3">3</span>
+        <span class="difficulty" data-value="4">4</span>
+        <span class="difficulty" data-value="5">5</span><br><br>
+        <label>Estimated Completion Time (minutes)</label><br>
+        <span class="time" data-value="5">5</span>
+        <span class="time" data-value="10">10</span>
+        <span class="time" data-value="15">15</span>
+        <span class="time" data-value="20">20</span>
+        <span class="time" data-value="25">25</span>
+        <span class="time" data-value="30">30</span>
+        <span class="time" data-value="35">35</span>
+        <span class="time" data-value="40">40</span>
+        <span class="time" data-value="45+">45+</span><br><br>
+        <button id="addTaskBtn">+ Add Task</button><br><br>
+        <button id="generateScheduleBtn">Generate Schedule</button><br><br>
+        <button id="clearBtn">Clear</button><br><br>
+    </div>
+    <div id="taskList">
+    </div>
+    <div id="scheduleList">
+    </div>
+    <script src="./popup.js"></script>
+</body>
+</html>

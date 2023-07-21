@@ -1,0 +1,53 @@
+body {
+    background-color: lightblue;
+    margin: 15px;
+    width: 320px;
+  }
+  
+  h1 {
+    text-align: center;
+  }
+  
+  #difficultyLevel button.selected,
+  #estimatedCompletionTime button.selected {
+    background-color: blue;
+    color: white;
+  }
+  
+  #taskList .task.completed {
+    color: grey;
+    text-decoration: line-through;
+    font-style: italic;
+  }
+  body {
+    width: 350px;
+    background-color: lightblue;
+    margin: 10px;
+}
+#taskList {
+    float: right;
+    width: 50%;
+}
+#taskForm {
+    float: left;
+    width: 50%;
+}
+.difficulty, .time {
+    display: inline-block;
+    margin-right: 5px;
+    border: 1px solid black;
+    padding: 5px;
+    cursor: pointer;
+}
+.selected {
+    background-color: lightgreen;
+}
+table {
+    border-collapse: collapse;
+}
+td, th {
+    border: 1px solid black;
+    padding: 5px;
+}
+  /* Add more styling as needed */
+  
