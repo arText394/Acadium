@@ -1,4 +1,5 @@
 let taskList = [];
+let schedule = [];
 
 const difficultyBtns = document.querySelectorAll('.difficulty');
 difficultyBtns.forEach(btn => btn.addEventListener('click', function() {
@@ -15,10 +16,14 @@ timeBtns.forEach(btn => btn.addEventListener('click', function() {
 }));
 
 document.addEventListener('DOMContentLoaded', function () {
-    chrome.storage.local.get(['tasks'], function(result) {
+    chrome.storage.local.get(['tasks', 'schedule'], function(result) {
         if (result.tasks) {
             taskList = result.tasks;
             renderTaskList();
+        }
+        if (result.schedule) {
+            schedule = result.schedule;
+            renderSchedule(schedule);
         }
     });
 
