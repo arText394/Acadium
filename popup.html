@@ -1,12 +1,25 @@
-
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
     <style>
         body {
             width: 350px;
             background-color: lightblue;
-            margin: 10px;
+            margin: 20px;
+            font-family: 'Lato', sans-serif;
+            line-height: 1; /* Update: Reset line-height to remove any extra spacing */
+        }
+        #title {
+            font-family: 'Monoton', cursive;
+            font-size: 24px;
+            text-align: center;
+            color: #16466B; /* Update: Dark blue color */
+            margin: 0; /* Update: Remove any margin */
+            padding: 0; /* Update: Remove any padding */
         }
         #taskList {
             float: right;
@@ -22,9 +35,14 @@
             border: 1px solid black;
             padding: 5px;
             cursor: pointer;
+            border-radius: 50%; /* Update: Makes the buttons circular */
+            text-align: center; /* Update: Centers the text in the buttons */
+            font-family: 'Lato', sans-serif; /* Update: Use Lato font for buttons */
+            font-size: 12px; /* Update: Adjust font size for buttons */
+            margin-bottom: 3px; /* Add space between the buttons */
         }
         .selected {
-            background-color: lightgreen;
+            background-color: rgb(112, 126, 196);
         }
         table {
             border-collapse: collapse;
@@ -33,20 +51,29 @@
             border: 1px solid black;
             padding: 5px;
         }
+        #positiveMessage {
+            text-align: center;
+            color: #16466B; /* Dark blue color */
+            font-size: 14px;
+            font-family: Arial, sans-serif; /* Update: Use Arial font for messages */
+            margin-top: 5px; /* Update: Increase the margin between messages and the title */
+            margin-bottom: 5px; /* Add space between the messages and buttons */
+        }
     </style>
 </head>
 <body>
+    <h2 id="title">Acadium</h2> <!-- Updated: Moved Acadium title to be centered at the top -->
+    <div id="positiveMessage"></div> <!-- Updated: Display positive messages here -->
     <div id="taskForm">
-        <h2>Acadium</h2>
         <label for="taskName">Task Name:</label><br>
         <input type="text" id="taskName" name="taskName" placeholder="Task Name"><br><br>
-        <label>Easy - Difficulty Level - Hard</label><br>
+        <label style="margin-bottom: 5px;">Easy - Difficulty Level - Hard</label><br> <!-- Added margin-bottom -->
         <span class="difficulty" data-value="1">1</span>
         <span class="difficulty" data-value="2">2</span>
         <span class="difficulty" data-value="3">3</span>
         <span class="difficulty" data-value="4">4</span>
         <span class="difficulty" data-value="5">5</span><br><br>
-        <label>Estimated Completion Time (minutes)</label><br>
+        <label style="margin-bottom: 5px;">Estimated Completion Time (minutes)</label><br> <!-- Added margin-bottom -->
         <span class="time" data-value="5">5</span>
         <span class="time" data-value="10">10</span>
         <span class="time" data-value="15">15</span>
@@ -56,13 +83,15 @@
         <span class="time" data-value="35">35</span>
         <span class="time" data-value="40">40</span>
         <span class="time" data-value="45+">45+</span><br><br>
-        <button id="addTaskBtn">+ Add Task</button><br><br>
-        <button id="generateScheduleBtn">Generate Schedule</button><br><br>
-        <button id="clearBtn">Clear</button><br><br>
+        <button id="addTaskBtn" style="margin-bottom: 5px;">+ Add Task</button><br> <!-- Added margin-bottom -->
+        <button id="generateScheduleBtn" style="margin-bottom: 5px;">Generate Schedule</button><br> <!-- Added margin-bottom -->
+        <button id="clearBtn" style="margin-bottom: 5px;">Clear</button><br> <!-- Added margin-bottom -->
     </div>
     <div id="taskList">
+        <!-- Task List Content Will Be Rendered Here -->
     </div>
     <div id="scheduleList">
+        <!-- Schedule Content Will Be Rendered Here -->
     </div>
     <script src="./popup.js"></script>
 </body>

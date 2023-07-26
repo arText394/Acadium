@@ -1,53 +1,52 @@
 body {
-    background-color: lightblue;
-    margin: 15px;
-    width: 320px;
-  }
-  
-  h1 {
-    text-align: center;
-  }
-  
-  #difficultyLevel button.selected,
-  #estimatedCompletionTime button.selected {
-    background-color: blue;
-    color: white;
-  }
-  
-  #taskList .task.completed {
-    color: grey;
-    text-decoration: line-through;
-    font-style: italic;
-  }
-  body {
-    width: 350px;
-    background-color: lightblue;
-    margin: 10px;
+  width: 400px; /* Increased the width to add more margin */
+  background-color: lightblue;
+  margin: 20px; /* Increased the margin */
 }
+
+#title {
+  text-align: center;
+  font-family: 'Monoton', cursive; /* Applied the Monoton font */
+  font-size: 24px;
+  color: #16466B; /* Dark blue color */
+  margin-bottom: 30px; /* Added margin at the bottom of the title */
+}
+
 #taskList {
-    float: right;
-    width: 50%;
+  float: right;
+  width: 50%;
 }
+
 #taskForm {
-    float: left;
-    width: 50%;
+  float: left;
+  width: 50%;
 }
+
 .difficulty, .time {
-    display: inline-block;
-    margin-right: 5px;
-    border: 1px solid black;
-    padding: 5px;
-    cursor: pointer;
+  display: inline-block;
+  margin-right: 5px;
+  border: 1px solid black;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 50%; /* Make the buttons circular */
+  width: 20px; /* Fixed width to make all buttons the same size */
+  height: 20px; /* Fixed height to make all buttons the same size */
+  text-align: center;
+  line-height: 20px;
+  font-weight: bold;
 }
+
 .selected {
-    background-color: lightgreen;
+  background-color: rgb(112, 126, 196);
 }
+
 table {
-    border-collapse: collapse;
+  border-collapse: collapse;
 }
+
 td, th {
-    border: 1px solid black;
-    padding: 5px;
+  border: 1px solid black;
+  padding: 5px;
 }
-  /* Add more styling as needed */
-  
+
+/* Add more styling as needed */

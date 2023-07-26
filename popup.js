@@ -15,6 +15,111 @@ timeBtns.forEach(btn => btn.addEventListener('click', function() {
     this.classList.add('selected');
 }));
 
+// List of positive messages
+const positiveMessages = [
+    "You can do it!",
+    "Keep going!",
+    "Stay motivated.",
+    "Believe in yourself",
+    "Progress, not perfection",
+    "Don't stop now!",
+    "Push through obstacles",
+    "Small steps matter",
+    "You're doing great!",
+    "Creativity sparks success",
+    "Keep challenging yourself",
+    "It's okay to struggle",
+    "Practice makes perfect",
+    "Don't fear mistakes",
+    "Embrace the process",
+    "Seek help when needed",
+    "You're learning lots!",
+    "Patience breeds progress",
+    "Celebrate small victories",
+    "Own your education",
+    "Persistence pays off",
+    "Stay curious, keep learning",
+    "Your effort counts",
+    "Set your own pace",
+    "Knowledge is power",
+    "Be your best",
+    "You're getting there",
+    "Stay determined",
+    "Trust in your abilities",
+    "Learning is growing",
+    "Challenge equals change",
+    "Stay focused",
+    "Don't rush, understand",
+    "You're capable, truly",
+    "You'll conquer this",
+    "Make your dreams happen",
+    "Be brave, ask questions",
+    "Every problem has solutions",
+    "Show the world",
+    "Confidence is key",
+    "Seize the day",
+    "Be patient, you'll succeed",
+    "Stay open-minded",
+    "The sky's the limit",
+    "You're building your future",
+    "Every assignment matters",
+    "Be fearless in learning",
+    "Keep the faith",
+    "Hard work brings success",
+    "Passion drives achievement",
+    "You'll solve it!",
+    "Embrace challenges",
+    "Never give up",
+    "All efforts are worthwhile",
+    "You're always improving",
+    "You're making progress",
+    "Every detail counts",
+    "Strive for excellence",
+    "Master the hard stuff",
+    "Take charge of learning",
+    "Learn, grow, repeat",
+    "Dare to be different",
+    "Perseverance is key",
+    "You're doing your best",
+    "You're smarter every day",
+    "Believe in your potential",
+    "Stay committed",
+    "You've got this!",
+    "Trust the process",
+    "Learning never ends",
+    "Dare to fail",
+    "Embrace your journey",
+    "Remember your goals",
+    "Knowledge is a treasure",
+    "Respect the struggle",
+    "Be proud of yourself",
+    "Your time is now",
+    "Progress, not perfection",
+    "Rise to challenges",
+    "Every question is smart",
+    "Keep exploring",
+    "Never stop believing",
+    "Continue to shine",
+    "Growth comes with practice",
+    "You're a knowledge seeker",
+    "Be a lifelong learner",
+    "Learn from everything",
+    "Make learning fun",
+    "Be consistent, see improvement",
+    "Every day is progress",
+    "Take one step today",
+    "Reach for the stars",
+    "Love your learning journey",
+    "Build bridges, not walls",
+    "Transform dreams into reality",
+    "Accept growth, deny limitations",
+    "Education shapes your destiny",
+    "Success is a process",
+    "Keep the learning flame alive",
+    "Embrace new ideas",
+    // Add all the other positive messages here...
+];
+
 document.addEventListener('DOMContentLoaded', function () {
     chrome.storage.local.get(['tasks', 'schedule'], function(result) {
         if (result.tasks) {
@@ -25,6 +130,11 @@ document.addEventListener('DOMContentLoaded', function () {
             schedule = result.schedule;
             renderSchedule(schedule);
         }
+
+        // Display a random positive message
+        const randomIndex = Math.floor(Math.random() * positiveMessages.length);
+        const positiveMessage = positiveMessages[randomIndex];
+        document.getElementById('positiveMessage').innerText = positiveMessage;
     });
 
     document.querySelector('#addTaskBtn').addEventListener('click', function() {
@@ -165,3 +275,4 @@ function renderSchedule(schedule) {
 
     document.querySelector('#scheduleList').innerHTML = scheduleHtml;
 }
+
