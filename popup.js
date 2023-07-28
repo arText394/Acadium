@@ -1,5 +1,7 @@
 let taskList = [];
 let schedule = [];
+let timerInterval;
+let timerDuration = 0;
 
 const difficultyBtns = document.querySelectorAll('.difficulty');
 difficultyBtns.forEach(btn => btn.addEventListener('click', function() {
@@ -116,12 +118,13 @@ const positiveMessages = [
     "Education shapes your destiny",
     "Success is a process",
     "Keep the learning flame alive",
-    "Embrace new ideas",
-    // Add all the other positive messages here...
-];
+    "Embrace new ideas"
+    
+]
 
 document.addEventListener('DOMContentLoaded', function () {
-    chrome.storage.local.get(['tasks', 'schedule'], function(result) {
+    // Load timerDuration from local storage
+    chrome.storage.local.get(['tasks', 'schedule', 'timerDuration'], function (result) {
         if (result.tasks) {
             taskList = result.tasks;
             renderTaskList();
@@ -129,6 +132,14 @@ document.addEventListener('DOMContentLoaded', function () {
         if (result.schedule) {
             schedule = result.schedule;
             renderSchedule(schedule);
+        }
+        // Load timer duration from storage and start the timer if it was running
+        if (result.timerDuration) {
+            timerDuration = result.timerDuration;
+            updateTimerDisplay();
+            if (timerDuration > 0) {
+                startTimer();
+            }
         }
 
         // Display a random positive message
@@ -235,33 +246,96 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// ... (Your existing JavaScript code) ...
+
+const pomodoroButtons = document.querySelectorAll('.pomodoro-circle');
+const startTimerBtn = document.querySelector('#startTimerBtn');
+const stopTimerBtn = document.querySelector('#stopTimerBtn');
+const resetTimerBtn = document.querySelector('#resetTimerBtn');
+
+pomodoroButtons.forEach(button => button.addEventListener('click', function() {
+    pomodoroButtons.forEach(btn => btn.classList.remove('pomodoro-selected'));
+    this.classList.add('pomodoro-selected');
+    timerDuration = parseInt(this.dataset.value) * 60; // Convert to seconds
+    updateTimerDisplay();
+}));
+
+startTimerBtn.addEventListener('click', startTimer);
+stopTimerBtn.addEventListener('click', stopTimer);
+resetTimerBtn.addEventListener('click', resetTimer);
+
+function updateTimerDisplay() {
+    const minutes = Math.floor(timerDuration / 60).toString().padStart(2, '0');
+    const seconds = (timerDuration % 60).toString().padStart(2, '0');
+    document.getElementById('timerDisplay').innerText = `${minutes}:${seconds}`;
+}
+let timerStartTime;
+
+function startTimer() {
+    if (!timerInterval) {
+        timerInterval = setInterval(() => {
+            timerDuration--;
+            updateTimerDisplay();
+            if (timerDuration <= 0) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                // Play sound when timer ends
+                playAlarmSound();
+            }
+            // Save the timerDuration in local storage when the timer updates
+            chrome.storage.local.set({ timerDuration: timerDuration });
+        }, 1000);
+    }
+}
+
+function stopTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+        // Save the timerDuration in local storage when the timer is stopped
+        chrome.storage.local.set({ timerDuration: timerDuration });
+    }
+}
+function resetTimer() {
+    stopTimer();
+    timerDuration = 0;
+    timerStartTime = null; // Reset the stored timestamp
+    updateTimerDisplay();
+}
+
+function playAlarmSound() {
+    const audio = new Audio('');
+    audio.play();
+}
+// ... (Your existing JavaScript code) ...
+
 function renderTaskList() {
     let taskListHtml = '';
     taskList.forEach(task => {
-        taskListHtml += '<input type="checkbox" class="taskCheckbox" data-name="' + task.name + '"> ' + task.name + '<br>';
+      taskListHtml += `
+        <div class="task-item">
+          <button class="remove-task-btn" data-name="${task.name}">x</button>
+          ${task.name}
+        </div>
+      `;
     });
     document.querySelector('#taskList').innerHTML = taskListHtml;
-
-    const checkboxes = document.querySelectorAll('.taskCheckbox');
-    checkboxes.forEach(checkbox => checkbox.addEventListener('change', function() {
-        if (this.checked) {
-            this.parentNode.style.textDecoration = 'line-through';
-            this.parentNode.style.color = 'grey';
-            this.parentNode.style.fontStyle = 'italic';
-            const index = taskList.findIndex(task => task.name === this.dataset.name);
-            if (index > -1) {
-                taskList.splice(index, 1);
-                chrome.storage.local.set({tasks: taskList}, function() {
-                    console.log('Task removed from storage');
-                });
-            }
-        } else {
-            this.parentNode.style.textDecoration = 'none';
-            this.parentNode.style.color = 'black';
-            this.parentNode.style.fontStyle = 'normal';
-        }
+  
+    const removeButtons = document.querySelectorAll('.remove-task-btn');
+    removeButtons.forEach(button => button.addEventListener('click', function() {
+      const taskName = this.dataset.name;
+      const index = taskList.findIndex(task => task.name === taskName);
+      if (index > -1) {
+        taskList.splice(index, 1);
+        chrome.storage.local.set({tasks: taskList}, function() {
+          console.log('Task removed from storage');
+          renderTaskList(); // Update the task list after removing a task
+        });
+      }
     }));
-}
+  }
+  
+
 
 function renderSchedule(schedule) {
     let scheduleHtml = '<table><tr><th>Time</th><th>Task Name</th></tr>';
