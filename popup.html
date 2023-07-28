@@ -10,41 +10,42 @@
 <body>
     <h2 id="title">Acadium</h2> <!-- Updated: Moved Acadium title to be centered at the top -->
     <div id="positiveMessage"></div> <!-- Updated: Display positive messages here -->
-    
-<div id="topSection">
-    <div id="taskForm">
-        <label for="taskName"> </label><br>
-        <input type="text" id="taskName" name="taskName" placeholder="Task Name"><br><br>
-        <label style="margin-bottom: 5px;">Easy - Difficulty Level - Hard</label><br> <!-- Added margin-bottom -->
-        <span class="difficulty" data-value="1">1</span>
-        <span class="difficulty" data-value="2">2</span>
-        <span class="difficulty" data-value="3">3</span>
-        <span class="difficulty" data-value="4">4</span>
-        <span class="difficulty" data-value="5">5</span><br><br>
-        <label style="margin-bottom: 5px;">Estimated Completion Time (minutes)</label><br> <!-- Added margin-bottom -->
-        <span class="time" data-value="5">5</span>
-        <span class="time" data-value="10">10</span>
-        <span class="time" data-value="15">15</span>
-        <span class="time" data-value="20">20</span>
-        <span class="time" data-value="25">25</span>
-        <span class="time" data-value="30">30</span>
-        <span class="time" data-value="35">35</span>
-        <span class="time" data-value="40">40</span>
-        <span class="time" data-value="45+">45+</span><br><br>
-        <button id="addTaskBtn" style="margin-bottom: 5px;">+ Add Task</button><br> <!-- Added margin-bottom -->
-        <button id="generateScheduleBtn" style="margin-bottom: 5px;">Generate Schedule</button><br> <!-- Added margin-bottom -->
-        <button id="clearBtn" style="margin-bottom: 5px;">Clear</button><br> <!-- Added margin-bottom -->
-    </div>
-    <!-- ... -->
-<div id="taskList">
-    <!-- Task List Content Will Be Rendered Here -->
-</div>
-<!-- ... -->
+    <div id="moneyMaker">Check out our <a href="https://www.etsy.com/shop/acadium/?etsrc=sdt" target="_blank">Merch!</a></div>
+    <div id="topSection">
+        <div id="taskForm">
+            <label for="taskName"> </label><br>
+            <input type="text" id="taskName" name="taskName" placeholder="Task Name"><br><br>
+            <label style="margin-bottom: 5px;">Easy - Difficulty Level - Hard</label><br> <!-- Added margin-bottom -->
+            <span class="difficulty" data-value="1">1</span>
+            <span class="difficulty" data-value="2">2</span>
+            <span class="difficulty" data-value="3">3</span>
+            <span class="difficulty" data-value="4">4</span>
+            <span class="difficulty" data-value="5">5</span><br><br>
+            <label style="margin-bottom: 5px;">Estimated Completion Time (minutes)</label><br> <!-- Added margin-bottom -->
+            <span class="time" data-value="5">5</span>
+            <span class="time" data-value="10">10</span>
+            <span class="time" data-value="15">15</span>
+            <span class="time" data-value="20">20</span>
+            <span class="time" data-value="25">25</span>
+            <span class="time" data-value="30">30</span>
+            <span class="time" data-value="35">35</span>
+            <span class="time" data-value="40">40</span>
+            <span class="time" data-value="45+">45+</span><br><br>
+            <button id="addTaskBtn" style="margin-bottom: 5px;">+ Add Task</button><br> <!-- Added margin-bottom -->
+            <button id="generateScheduleBtn" style="margin-bottom: 5px;">Generate Schedule</button><br> <!-- Added margin-bottom -->
+            <button id="clearBtn" style="margin-bottom: 5px;">Clear</button><br> <!-- Added margin-bottom -->
+        </div>
+        <!-- ... -->
+        <div id="taskList">
+        <!-- Task List Content Will Be Rendered Here -->
+        </div>
 
-    <div id="scheduleList">
-        <!-- Schedule Content Will Be Rendered Here -->
-    </div>
-</div>
+
+        <div id="scheduleList">
+            <!-- Schedule Content Will Be Rendered Here -->
+        </div>
+        
+    </div> 
 
     <div id="pomodoroTimer">
         <h3 id="pomodoroTitle">Pomodoro Timer</h3>
@@ -58,10 +59,20 @@
         </div>
         <div class="timer-buttons">
             <button id="startTimerBtn">Start</button>
-            <button id="stopTimerBtn">Stop</button>
+            <button id="stopTimerBtn">Pause</button>
             <button id="resetTimerBtn">Reset</button>
         </div>
-    </div>
+        <div id="socials">
+            <p> <a href="https://www.instagram.com/_acadium/" target="_blank"> 
+                <img src="images/instalogo.png" alt="Instagram Logo" style="width:15px;height:15px;">
+            </a>Follow us & our partners!<a href="https://www.instagram.com/_silent_medico_/" target="_blank">_silent_medico_</a> & 
+                <a href="https://www.instagram.com/coffe_study7/" target="_blank">coffe_study7</a>
+            </p>
+            
+    </div>  
+
+
+
     <script src="./popup.js"></script>
 </body>
 </html>

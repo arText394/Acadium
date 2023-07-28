@@ -1,31 +1,36 @@
 body {
-  width: 400px; /* Increased the width to add more margin */
-  height: 800px;
-  background-color: rgb(173, 216, 230);
-  margin: 20px; /* Increased the margin */
+  width: 350px;
+  height: 500vh;
+  background-color: lightblue;
+  margin: 15px;
+  font-family: 'Lato', sans-serif;
+  line-height: 1;
 }
 
 #title {
-  text-align: center;
-  font-family: 'Monoton', cursive; /* Applied the Monoton font */
+  font-family: 'Monoton', cursive;
   font-size: 24px;
-  color: rgb(22, 69, 106); /* Dark blue color */
-  margin-bottom: 30px; /* Added margin at the bottom of the title */
+  text-align: center;
+  color: #16466B;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 5px;
+}
+
+#taskList, #taskForm {
+  width: 48%;
+  float: left;
 }
 
 #taskForm {
-  width: 48%; /* Adjust the width as needed */
-}
-
-#taskList {
-  width: 48%; /* Adjust the width as needed */
+  margin-right: 2%;
 }
 
 /* Add this new CSS for the "x" buttons and task list items */
 .task-item {
   display: flex;
   align-items: center;
-  margin-bottom: 5px; /* Add space between each task item */
+  margin-bottom: 5px;
 }
 
 .remove-task-btn {
@@ -33,12 +38,12 @@ body {
   height: 20px;
   border: none;
   border-radius: 50%;
-  background-color: rgb(22, 69, 106);
+  background-color: #16466B;
   color: white;
   font-size: 12px;
   font-weight: bold;
   cursor: pointer;
-  margin-right: 5px; /* Add space between the "x" button and the task name */
+  margin-right: 5px;
 }
 
 .difficulty, .time {
@@ -47,82 +52,46 @@ body {
   border: 1px solid black;
   padding: 5px;
   cursor: pointer;
-  border-radius: 50%; /* Make the buttons circular */
-  width: 20px; /* Fixed width to make all buttons the same size */
-  height: 20px; /* Fixed height to make all buttons the same size */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
   text-align: center;
-  line-height: 20px;
-  font-weight: bold;
-}
-
-.selected {
-  background-color: rgb(112, 126, 196);
-}
-
-table {
-  border-collapse: collapse;
-}
-
-td, th {
-  border: 1px solid black;
-  padding: 5px;
-}
-
-/* Add more styling as needed */
-
-body {
-  width: 350px;
-  background-color: lightblue;
-  margin: 20px;
   font-family: 'Lato', sans-serif;
-  line-height: 1; /* Update: Reset line-height to remove any extra spacing */
+  font-size: 12px;
+  margin-bottom: 3px;
 }
-#title {
-  font-family: 'Monoton', cursive;
-  font-size: 24px;
-  text-align: center;
-  color: #16466B; /* Update: Dark blue color */
-  margin: 0; /* Update: Remove any margin */
-  padding: 0; /* Update: Remove any padding */
-}
-#taskList {
-  float: right;
-  width: 50%;
-}
-#taskForm {
-  float: left;
-  width: 50%;
-}
-.difficulty, .time {
-  display: inline-block;
-  margin-right: 5px;
-  border: 1px solid black;
-  padding: 5px;
-  cursor: pointer;
-  border-radius: 50%; /* Update: Makes the buttons circular */
-  text-align: center; /* Update: Centers the text in the buttons */
-  font-family: 'Lato', sans-serif; /* Update: Use Lato font for buttons */
-  font-size: 12px; /* Update: Adjust font size for buttons */
-  margin-bottom: 3px; /* Add space between the buttons */
-}
+
 .selected {
   background-color: rgb(112, 126, 196);
 }
+
 table {
   border-collapse: collapse;
 }
+
 td, th {
   border: 1px solid black;
   padding: 5px;
 }
+
 #positiveMessage {
   text-align: center;
-  color: rgb(22, 70, 107); /* Dark blue color */
+  color: #16466B;
   font-size: 14px;
-  font-family: Arial, sans-serif; /* Update: Use Arial font for messages */
-  margin-top: 5px; /* Update: Increase the margin between messages and the title */
-  margin-bottom: 5px; /* Add space between the messages and buttons */
+  font-family: Arial, sans-serif;
+  margin-top: 0px;
+  margin-bottom: 5px;
 }
+
+#moneyMaker {
+  text-align: center;
+  color: #16466B;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+  margin-top: 0px;
+  margin-bottom: 1px;
+}
+
 .pomodoro-circle {
   width: 25px;
   height: 25px;
@@ -137,38 +106,40 @@ td, th {
   cursor: pointer;
   transition: background-color 0.3s;
 }
+
 .pomodoro-selected {
-  background-color: rgb(22, 70, 107); /* Dark blue color */
+  background-color: #16466B;
 }
+
 #timerDisplay {
   text-align: center;
   font-size: 24px;
-  margin-top: 10px;
+  margin-top: 0px;
   margin-bottom: 10px;
 }
+
 .timer-buttons {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: 5px;
 }
 
 #pomodoroTimer {
-  position: fixed;
   bottom: 0;
   left: 50%;
-  transform: translateX(-50%);
-  margin-bottom: 25px;
+  transform: translateX( -50%, -50%);
+  margin-bottom: 5px;
 }
 
 #topSection {
-  min-height: 800px; /* adjust this value as needed */
+  min-height: 375px;
 }
 
 #pomodoroTitle {
   font-family: 'Monoton', cursive;
   font-size: 20px;
   text-align: center;
-  color: #16466B; /* Update: Dark blue color */
-  margin: 0; /* Update: Remove any margin */
-  padding: 0; /* Update: Remove any padding */
+  color: #16466B;
+  margin: 0;
+  padding: 0;
 }
