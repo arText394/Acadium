@@ -2,6 +2,7 @@ let taskList = [];
 let schedule = [];
 let timerInterval;
 let timerDuration = 0;
+let backgroundPort = chrome.runtime.connect({name: "popup"});
 
 const difficultyBtns = document.querySelectorAll('.difficulty');
 difficultyBtns.forEach(btn => btn.addEventListener('click', function() {
@@ -16,6 +17,58 @@ timeBtns.forEach(btn => btn.addEventListener('click', function() {
     timeBtns.forEach(btn => btn.classList.remove('selected'));
     this.classList.add('selected');
 }));
+
+function renderTaskList() {
+    let taskListHtml = '';
+    taskList.forEach(task => {
+      taskListHtml += `
+        <div class="task-item">
+          <button class="remove-task-btn" data-name="${task.name}">x</button>
+          ${task.name}
+        </div>
+      `;
+    });
+    document.querySelector('#taskList').innerHTML = taskListHtml;
+  
+    const removeButtons = document.querySelectorAll('.remove-task-btn');
+    removeButtons.forEach(button => button.addEventListener('click', function() {
+      const taskName = this.dataset.name;
+      const index = taskList.findIndex(task => task.name === taskName);
+      if (index > -1) {
+        taskList.splice(index, 1);
+        chrome.storage.local.set({tasks: taskList}, function() {
+          console.log('Task removed from storage');
+          renderTaskList(); // Update the task list after removing a task
+        });
+      }
+    }));
+  }
+  //////////////////////////////////////
+function renderSchedule(schedule) {
+    let scheduleHtml = '<table><tr><th>Time</th><th>Task Name</th></tr>';
+    schedule.forEach((item, index) => {
+        scheduleHtml += '<tr><td>' + item.duration + ' min</td><td>' + item.task + '</td></tr>';
+        if (item.task !== 'Break' && item.time === item.time - 30 && index !== schedule.length - 1) {
+            scheduleHtml += '<tr><td>5 min</td><td>Break</td></tr>';
+        }
+    });
+    scheduleHtml += '</table>';
+
+    document.querySelector('#scheduleList').innerHTML = scheduleHtml;
+}
+
+function formatTime(seconds) {
+    if (seconds === undefined || seconds === null) {
+        return '00:00';
+    }
+    const minutes = Math.floor(seconds / 60);
+    seconds %= 60;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
+function updateTimerDisplay() {
+    document.querySelector('#timerOutput').innerText = formatTime(timeLeft);
+}
 
 // List of positive messages
 const positiveMessages = [
@@ -121,7 +174,7 @@ const positiveMessages = [
     "Embrace new ideas"
     
 ]
-
+//////////////////////////////////////////////////////////////////////////////////////////
 document.addEventListener('DOMContentLoaded', function () {
     // Load timerDuration from local storage
     chrome.storage.local.get(['tasks', 'schedule', 'timerDuration'], function (result) {
@@ -138,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
             timerDuration = result.timerDuration;
             updateTimerDisplay();
             if (timerDuration > 0) {
-                startTimer();
+                chrome.runtime.sendMessage({cmd: 'start', duration: timerDuration});
             }
         }
 
@@ -175,7 +228,7 @@ document.addEventListener('DOMContentLoaded', function () {
         difficultyBtns.forEach(btn => btn.classList.remove('selected'));
         timeBtns.forEach(btn => btn.classList.remove('selected'));
     });
-
+/////////////////////////////////////////////////////////////////
     document.querySelector('#generateScheduleBtn').addEventListener('click', function() {
         const sortedTasks = [...taskList].sort((a, b) => b.difficulty - a.difficulty);
         let schedule = [];
@@ -246,107 +299,109 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// ... (Your existing JavaScript code) ...
 
-const pomodoroButtons = document.querySelectorAll('.pomodoro-circle');
-const startTimerBtn = document.querySelector('#startTimerBtn');
-const stopTimerBtn = document.querySelector('#stopTimerBtn');
-const resetTimerBtn = document.querySelector('#resetTimerBtn');
 
-pomodoroButtons.forEach(button => button.addEventListener('click', function() {
-    pomodoroButtons.forEach(btn => btn.classList.remove('pomodoro-selected'));
-    this.classList.add('pomodoro-selected');
-    timerDuration = parseInt(this.dataset.value) * 60; // Convert to seconds
-    updateTimerDisplay();
-}));
-
-startTimerBtn.addEventListener('click', startTimer);
-stopTimerBtn.addEventListener('click', stopTimer);
-resetTimerBtn.addEventListener('click', resetTimer);
-
-function updateTimerDisplay() {
-    const minutes = Math.floor(timerDuration / 60).toString().padStart(2, '0');
-    const seconds = (timerDuration % 60).toString().padStart(2, '0');
-    document.getElementById('timerDisplay').innerText = `${minutes}:${seconds}`;
-}
-let timerStartTime;
-
-function startTimer() {
-    if (!timerInterval) {
-        timerInterval = setInterval(() => {
-            timerDuration--;
-            updateTimerDisplay();
-            if (timerDuration <= 0) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-                // Play sound when timer ends
-                playAlarmSound();
-            }
-            // Save the timerDuration in local storage when the timer updates
-            chrome.storage.local.set({ timerDuration: timerDuration });
-        }, 1000);
-    }
-}
-
-function stopTimer() {
-    if (timerInterval) {
-        clearInterval(timerInterval);
-        timerInterval = null;
-        // Save the timerDuration in local storage when the timer is stopped
-        chrome.storage.local.set({ timerDuration: timerDuration });
-    }
-}
-function resetTimer() {
-    stopTimer();
-    timerDuration = 0;
-    timerStartTime = null; // Reset the stored timestamp
-    updateTimerDisplay();
-}
-
-function playAlarmSound() {
-    const audio = new Audio('');
-    audio.play();
-}
-// ... (Your existing JavaScript code) ...
-
-function renderTaskList() {
-    let taskListHtml = '';
-    taskList.forEach(task => {
-      taskListHtml += `
-        <div class="task-item">
-          <button class="remove-task-btn" data-name="${task.name}">x</button>
-          ${task.name}
-        </div>
-      `;
+// Acadium Plus Color Picker Functionality
+document.querySelector('#bgColor').addEventListener('input', function() {
+    const bgColor = this.value;
+    chrome.storage.local.set({bgColor: bgColor}, function() {
+        console.log('Background color saved');
     });
-    document.querySelector('#taskList').innerHTML = taskListHtml;
-  
-    const removeButtons = document.querySelectorAll('.remove-task-btn');
-    removeButtons.forEach(button => button.addEventListener('click', function() {
-      const taskName = this.dataset.name;
-      const index = taskList.findIndex(task => task.name === taskName);
-      if (index > -1) {
-        taskList.splice(index, 1);
-        chrome.storage.local.set({tasks: taskList}, function() {
-          console.log('Task removed from storage');
-          renderTaskList(); // Update the task list after removing a task
-        });
-      }
-    }));
-  }
-  
+    document.body.style.backgroundColor = bgColor;
+});
 
-
-function renderSchedule(schedule) {
-    let scheduleHtml = '<table><tr><th>Time</th><th>Task Name</th></tr>';
-    schedule.forEach((item, index) => {
-        scheduleHtml += '<tr><td>' + item.duration + ' min</td><td>' + item.task + '</td></tr>';
-        if (item.task !== 'Break' && item.time === item.time - 30 && index !== schedule.length - 1) {
-            scheduleHtml += '<tr><td>5 min</td><td>Break</td></tr>';
+document.addEventListener('DOMContentLoaded', function () {
+    chrome.storage.local.get(['bgColor', 'timerDuration'], function(result) {
+        if (result.bgColor) {
+            document.body.style.backgroundColor = result.bgColor;
+            document.querySelector('#bgColor').value = result.bgColor;
+        }
+        if (result.timerDuration) {
+            document.querySelector('#timerDuration').value = result.timerDuration;
         }
     });
-    scheduleHtml += '</table>';
+    
+    // Set a flag in chrome.storage.local to indicate that the popup is being opened
+    chrome.storage.local.set({popupOpened: true}, function() {
+        console.log('Popup opened');
+    });
+});
 
-    document.querySelector('#scheduleList').innerHTML = scheduleHtml;
-}
+document.querySelector('#colorWheelImage').addEventListener('click', function() {
+    document.querySelector('#bgColor').click();
+});
 
+
+document.querySelector('#resetColor').addEventListener('click', function() {
+    const defaultColor = 'lightblue'; // Replace with your default color
+    chrome.storage.local.set({bgColor: defaultColor}, function() {
+        console.log('Background color reset');
+    });
+    document.body.style.backgroundColor = defaultColor;
+    document.querySelector('#bgColor').value = defaultColor;
+});
+
+// Acadium Plus Pomodoro Timer
+
+let timeLeft = 0;
+let alarmSound = new Audio(chrome.runtime.getURL("acadiumalarm.mp3"));
+
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    if (request.cmd === 'tick') {
+        timeLeft = request.timeLeft;
+        document.querySelector('#timerOutput').innerText = formatTime(timeLeft);
+        if (timeLeft <= 0) {
+            document.querySelector('#timerOutput').classList.add('blink');
+        }
+    } else if (request.cmd === 'playAlarm') {
+        alarmSound.play();
+    }
+});
+
+document.querySelector('#startPauseResumeBtn').addEventListener('click', function() {
+    if (this.innerText === 'Start' || this.innerText === 'Resume') {
+        const timerDuration = document.querySelector('#timerDuration').value;
+        chrome.runtime.sendMessage({cmd: 'start', duration: timerDuration});
+        this.innerText = 'Pause';
+        chrome.storage.local.set({buttonState: 'Pause'});
+    } else if (this.innerText === 'Pause') {
+        chrome.runtime.sendMessage({cmd: 'pause'});
+        this.innerText = 'Resume';
+        chrome.storage.local.set({buttonState: 'Resume'});
+    }
+});
+
+chrome.storage.local.get(['buttonState'], function(result) {
+    if (result.buttonState) {
+        document.querySelector('#startPauseResumeBtn').innerText = result.buttonState;
+    } 
+});
+
+chrome.runtime.sendMessage({cmd: 'getTimeLeft'}, function(response) {
+    if (chrome.runtime.lastError) {
+        // An error occurred
+        console.log(chrome.runtime.lastError.message);
+    } else {
+        // No error occurred, the popup is open and received the message
+        if (response.timeLeft) {
+            timeLeft = response.timeLeft;
+            document.querySelector('#timerOutput').innerText = formatTime(timeLeft);
+        } else {
+            document.querySelector('#timerOutput').innerText = '00:00';
+        }
+    }
+});
+
+
+document.querySelector('#cancelBtn').addEventListener('click', function() {
+    chrome.runtime.sendMessage({cmd: 'cancel'});
+    document.querySelector('#startPauseResumeBtn').innerText = 'Start';
+    document.querySelector('#timerOutput').innerText = '';
+    document.querySelector('#timerDuration').value = '25'; // Reset the dropdown selection
+    timeLeft = 0; // Reset the timer state
+});
+
+chrome.runtime.sendMessage({cmd: 'getTimeLeft'}, function(response) {
+    timeLeft = response.timeLeft;
+    document.querySelector('#timerOutput').innerText = formatTime(timeLeft);
+});

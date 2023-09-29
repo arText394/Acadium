@@ -143,3 +143,20 @@ td, th {
   margin: 0;
   padding: 0;
 }
+
+/* Timer Styles */
+#timerOutput.blink {
+  color: red;
+  animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+  0% {opacity: 1;}
+  50% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+#timerOutput {
+  font-size: 24px;
+  font-weight: bold;
+}

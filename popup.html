@@ -9,7 +9,16 @@
 </head>
 <body>
     <h2 id="title">Acadium</h2> <!-- Updated: Moved Acadium title to be centered at the top -->
-    <div id="positiveMessage"></div> <!-- Updated: Display positive messages here -->
+    <!-- Updated: Display positive messages here -->
+    <div id="positiveMessage"></div> 
+    <!--Acadium Plus Functionality-->
+    <label for="bgColor">
+        <img src="images/color-wheel48.png" alt="Color Wheel" id="colorWheelImage">
+        <input type="color" id="bgColor" name="bgColor" style="display: none;">
+    </label> <br>
+    <button id="resetColor">Reset</button>
+
+   
     
     <div id="topSection">
         <div id="taskForm">
@@ -32,7 +41,7 @@
             <span class="time" data-value="40">40</span>
             <span class="time" data-value="45+">45+</span><br><br>
             <button id="addTaskBtn" style="margin-bottom: 5px;">+ Add Task</button><br> <!-- Added margin-bottom -->
-            <button id="generateScheduleBtn" style="margin-bottom: 5px;">Generate Schedule</button><br> <!-- Added margin-bottom -->
+            <button id="generateScheduleBtn" style="margin-bottom: 5px;">Generate Schedule</button> <!-- Added margin-bottom -->
             <button id="clearBtn" style="margin-bottom: 5px;">Clear</button><br> <!-- Added margin-bottom -->
         </div>
         <!-- ... -->
@@ -47,21 +56,23 @@
         
     </div> 
 
-    <div id="pomodoroTimer">
-        <h3 id="pomodoroTitle">Pomodoro Timer</h3>
-        <div id="timerDisplay">00:00</div>
-        <div class="timer-buttons">
-            <div class="pomodoro-circle" data-value="5">5</div>
-            <div class="pomodoro-circle" data-value="10">10</div>
-            <div class="pomodoro-circle" data-value="15">15</div>
-            <div class="pomodoro-circle" data-value="20">20</div>
-            <div class="pomodoro-circle" data-value="25">25</div>
-        </div>
-        <div class="timer-buttons">
-            <button id="startTimerBtn">Start</button>
-            <button id="stopTimerBtn">Pause</button>
-            <button id="resetTimerBtn">Reset</button>
-        </div>
+        <!--Pomodoro Timer-->
+        <select id="timerDuration">
+            <option value="0.083">5 seconds</option> FOR TESTING, REMOVE FOR PROD
+            <option value="1">1 minute</option> FOR TESTING, REMOVE FOR PROD
+            <option value="5">5 minutes</option>
+            <option value="10">10 minutes</option>
+            <option value="15">15 minutes</option>
+            <option value="20">20 minutes</option>
+            <option value="25" selected>25 minutes</option>
+        </select>
+        <button id="startPauseResumeBtn">Start</button>
+        <button id="cancelBtn">Cancel</button>
+        <div id="timerOutput"></div>
+        <audio id="alarmSound" src="acadiumalarm.mp3"></audio>
+
+
+        <!--Socials-->
         <div id="socials">
             <p> <a href="https://www.instagram.com/_acadium/" target="_blank"> 
                 <img src="images/instalogo.png" alt="Instagram Logo" style="width:15px;height:15px;">
